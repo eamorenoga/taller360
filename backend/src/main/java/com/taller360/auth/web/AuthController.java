@@ -25,6 +25,11 @@ public class AuthController {
     this.auth = auth;
   }
 
+  @GetMapping("/login")
+  MessageResponse loginInfo() {
+    return new MessageResponse("Use POST /api/v1/auth/login con email y password en JSON");
+  }
+
   @PostMapping("/login")
   TokenResponse login(@RequestBody LoginRequest request, HttpServletRequest http) {
     return auth.login(request, http);
