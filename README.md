@@ -157,6 +157,8 @@ fromDatabase:
 
 Spring Boot necesita una URL JDBC, asi que la aplicacion convierte al iniciar `postgresql://usuario:password@host:5432/db` en `jdbc:postgresql://host:5432/db` y extrae usuario/contrasena.
 
+Como respaldo, el Blueprint tambien inyecta `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_NAME`, `DATABASE_USER` y `DATABASE_PASSWORD`. Si el backend intenta conectar a `localhost:5432` en Render, esas variables no estan configuradas en el servicio backend o Render no esta usando el Blueprint actualizado.
+
 Si creas los servicios manualmente en lugar de usar Blueprint:
 
 - Backend:
@@ -166,6 +168,16 @@ Si creas los servicios manualmente en lugar de usar Blueprint:
   - Docker Context: `.`.
   - Environment:
     - `DATABASE_URL`: Internal Database URL de PostgreSQL en Render.
+    - Alternativamente:
+      - `DATABASE_HOST`: host interno de PostgreSQL.
+      - `DATABASE_PORT`: `5432`.
+      - `DATABASE_NAME`: nombre de la base de datos.
+      - `DATABASE_USER`: usuario.
+      - `DATABASE_PASSWORD`: contrasena.
+    - O puedes configurar directamente:
+      - `SPRING_DATASOURCE_URL`: `jdbc:postgresql://HOST:5432/DB`.
+      - `SPRING_DATASOURCE_USERNAME`: usuario.
+      - `SPRING_DATASOURCE_PASSWORD`: contrasena.
     - `REDIS_URL`: Internal connection string del servicio Key Value.
     - `JWT_SECRET`: secreto largo generado manualmente.
     - `APP_CORS_ALLOWED_ORIGINS`: URL publica del frontend.

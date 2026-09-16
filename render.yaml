@@ -12,6 +12,26 @@ services:
         fromDatabase:
           name: taller360-postgres
           property: connectionString
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: taller360-postgres
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: taller360-postgres
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: taller360-postgres
+          property: database
+      - key: DATABASE_USER
+        fromDatabase:
+          name: taller360-postgres
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: taller360-postgres
+          property: password
       - key: REDIS_URL
         fromService:
           type: keyvalue
