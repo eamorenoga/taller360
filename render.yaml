@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: taller360-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: taller360-postgres
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: taller360-postgres
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: taller360-postgres
+          property: database
+      - key: DATABASE_USER
+        fromDatabase:
+          name: taller360-postgres
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: taller360-postgres
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: taller360-redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false
+
+  - type: web
+    name: taller360-frontend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+
+  - type: keyvalue
+    name: taller360-redis
+    plan: free
+    ipAllowList: []
+
+databases:
+  - name: taller360-postgres
+    databaseName: taller360
+    user: taller360
+    plan: free
