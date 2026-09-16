@@ -147,6 +147,21 @@ Pasos:
 
 Render asigna la variable `PORT` automaticamente. El backend usa `server.port=${PORT}` y el frontend inicia Next.js con `-p ${PORT}`.
 
+Si creas los servicios manualmente en lugar de usar Blueprint:
+
+- Backend:
+  - Runtime: Docker.
+  - Root Directory: `backend`.
+  - Dockerfile Path: `./Dockerfile`.
+  - Docker Context: `.`.
+- Frontend:
+  - Runtime: Docker.
+  - Root Directory: `frontend`.
+  - Dockerfile Path: `./Dockerfile`.
+  - Docker Context: `.`.
+
+El error `failed to read dockerfile: open Dockerfile: no such file or directory` aparece cuando Render intenta construir desde la raiz del repositorio sin `rootDir`, porque los Dockerfile viven dentro de `backend/` y `frontend/`.
+
 ## Desarrollo sin Docker
 
 Backend:
