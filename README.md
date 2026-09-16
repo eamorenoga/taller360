@@ -162,6 +162,8 @@ Si creas los servicios manualmente en lugar de usar Blueprint:
 
 El error `failed to read dockerfile: open Dockerfile: no such file or directory` aparece cuando Render intenta construir desde la raiz del repositorio sin `rootDir`, porque los Dockerfile viven dentro de `backend/` y `frontend/`.
 
+Para evitar ese bloqueo en despliegues manuales, tambien existe un `Dockerfile` en la raiz del repositorio que construye el backend. Si quieres desplegar frontend y backend como servicios separados, usa la configuracion de `rootDir` indicada arriba o el Blueprint.
+
 ## Desarrollo sin Docker
 
 Backend:
