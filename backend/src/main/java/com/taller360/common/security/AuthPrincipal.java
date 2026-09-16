@@ -16,6 +16,11 @@ public record AuthPrincipal(
     Collection<? extends GrantedAuthority> authorities)
     implements UserDetails {
   @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return authorities;
+  }
+
+  @Override
   public String getPassword() {
     return password;
   }
