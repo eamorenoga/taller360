@@ -147,6 +147,16 @@ Pasos:
 
 Render asigna la variable `PORT` automaticamente. El backend usa `server.port=${PORT}` y el frontend inicia Next.js con `-p ${PORT}`.
 
+El backend espera la variable `DATABASE_URL` con la **Internal Database URL** de Render. El `render.yaml` la configura automaticamente con:
+
+```yaml
+fromDatabase:
+  name: taller360-postgres
+  property: connectionString
+```
+
+Spring Boot necesita una URL JDBC, asi que la aplicacion convierte al iniciar `postgresql://usuario:password@host:5432/db` en `jdbc:postgresql://host:5432/db` y extrae usuario/contrasena.
+
 Si creas los servicios manualmente en lugar de usar Blueprint:
 
 - Backend:
@@ -154,6 +164,11 @@ Si creas los servicios manualmente en lugar de usar Blueprint:
   - Root Directory: `backend`.
   - Dockerfile Path: `./Dockerfile`.
   - Docker Context: `.`.
+  - Environment:
+    - `DATABASE_URL`: Internal Database URL de PostgreSQL en Render.
+    - `REDIS_URL`: Internal connection string del servicio Key Value.
+    - `JWT_SECRET`: secreto largo generado manualmente.
+    - `APP_CORS_ALLOWED_ORIGINS`: URL publica del frontend.
 - Frontend:
   - Runtime: Docker.
   - Root Directory: `frontend`.
