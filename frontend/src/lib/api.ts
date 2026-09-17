@@ -99,6 +99,33 @@ export type Client360 = {
   cartera: { estado: string; saldoPendiente: number; moneda: string; documentos: RelatedItem[] };
 };
 export type RelatedItem = { id: string; titulo: string; estado: string; referencia: string; fecha: string };
+export type Vehicle = {
+  id: string;
+  empresaId: string;
+  clienteId: string;
+  cliente: string;
+  sucursalId: string | null;
+  placa: string;
+  vin: string | null;
+  marca: string;
+  modelo: string;
+  version: string | null;
+  anio: number | null;
+  motor: string | null;
+  combustible: string | null;
+  transmision: string | null;
+  color: string | null;
+  kilometraje: number;
+  estado: string;
+  notas: string | null;
+};
+export type Vehicle360 = {
+  vehiculo: Vehicle;
+  documentos: { id: string; tipo: string; nombreArchivo: string; url: string; venceEn: string | null; estado: string; notas: string | null; fechaCreacion: string }[];
+  fotos: { id: string; url: string; descripcion: string | null; principal: boolean; fechaCreacion: string }[];
+  garantias: { id: string; tipo: string; descripcion: string | null; proveedor: string | null; iniciaEn: string | null; venceEn: string | null; kilometrajeLimite: number | null; estado: string; fechaCreacion: string }[];
+  timeline: { id: string; modulo: string; titulo: string; descripcion: string | null; referenciaId: string | null; estado: string | null; fechaHora: string }[];
+};
 export type Me = {
   id: string;
   empresaId: string;
