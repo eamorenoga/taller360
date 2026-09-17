@@ -88,6 +88,11 @@ erDiagram
 - `GET /api/v1/roles`
 - `POST /api/v1/roles`
 - `GET /api/v1/permissions`
+- `GET /api/v1/permissions/matrix`
+- `PUT /api/v1/users/{id}`
+- `DELETE /api/v1/users/{id}`
+- `PUT /api/v1/roles/{id}`
+- `DELETE /api/v1/roles/{id}`
 - `POST /api/v1/companies`
 - `PUT /api/v1/companies/{id}`
 - `DELETE /api/v1/companies/{id}`
@@ -108,6 +113,7 @@ erDiagram
 - `DELETE /api/v1/operational-parameters/{id}`
 
 Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
+Documentacion tecnica del modulo M03: [docs/M03_USUARIOS_ROLES_PERMISOS.md](docs/M03_USUARIOS_ROLES_PERMISOS.md).
 
 ## 6. Componentes y pantallas
 

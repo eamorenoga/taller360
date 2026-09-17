@@ -294,6 +294,21 @@ select {
   cursor: pointer;
 }
 
+.permission-list {
+  max-height: 260px;
+  overflow: auto;
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: white;
+}
+
+.matrix-wrap {
+  overflow: auto;
+}
+
 @media (max-width: 800px) {
   .app-shell {
     grid-template-columns: 1fr;

@@ -3,9 +3,9 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppLayout } from "@/components/AppLayout";
-import { api, currentUser, type Branch, type Company, type Consecutive, type Me, type OperationalParameter, type Tax } from "@/lib/api";
+import { api, currentUser, type Branch, type Company, type Consecutive, type Me, type OperationalParameter, type PermissionMatrix, type PermissionSummary, type RoleSummary, type Tax, type UserSummary } from "@/lib/api";
 
-type Tab = "empresa" | "sucursales" | "impuestos" | "consecutivos" | "parametros";
+type Tab = "empresa" | "sucursales" | "usuarios" | "roles" | "permisos" | "impuestos" | "consecutivos" | "parametros";
 
 export default function ConfigurationPage() {
   const router = useRouter();
@@ -16,6 +16,10 @@ export default function ConfigurationPage() {
   const [taxes, setTaxes] = useState<Tax[]>([]);
   const [consecutives, setConsecutives] = useState<Consecutive[]>([]);
   const [parameters, setParameters] = useState<OperationalParameter[]>([]);
+  const [users, setUsers] = useState<UserSummary[]>([]);
+  const [roles, setRoles] = useState<RoleSummary[]>([]);
+  const [permissions, setPermissions] = useState<PermissionSummary[]>([]);
+  const [matrix, setMatrix] = useState<PermissionMatrix | null>(null);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -26,18 +30,26 @@ export default function ConfigurationPage() {
   }, [router]);
 
   async function load() {
-    const [companies, branchList, taxList, consecutiveList, parameterList] = await Promise.all([
+    const [companies, branchList, taxList, consecutiveList, parameterList, userList, roleList, permissionList, matrixData] = await Promise.all([
       api<Company[]>("/companies"),
       api<Branch[]>("/branches"),
       api<Tax[]>("/taxes"),
       api<Consecutive[]>("/consecutives"),
-      api<OperationalParameter[]>("/operational-parameters")
+      api<OperationalParameter[]>("/operational-parameters"),
+      api<UserSummary[]>("/users"),
+      api<RoleSummary[]>("/roles"),
+      api<PermissionSummary[]>("/permissions"),
+      api<PermissionMatrix>("/permissions/matrix")
     ]);
     setCompany(companies[0] ?? null);
     setBranches(branchList);
     setTaxes(taxList);
     setConsecutives(consecutiveList);
     setParameters(parameterList);
+    setUsers(userList);
+    setRoles(roleList);
+    setPermissions(permissionList);
+    setMatrix(matrixData);
   }
 
   async function saveCompany(event: FormEvent<HTMLFormElement>) {
@@ -58,7 +70,7 @@ export default function ConfigurationPage() {
     <AppLayout user={user}>
       <h1>Configuracion</h1>
       <div className="tabs">
-        {(["empresa", "sucursales", "impuestos", "consecutivos", "parametros"] as Tab[]).map((item) => (
+        {(["empresa", "sucursales", "usuarios", "roles", "permisos", "impuestos", "consecutivos", "parametros"] as Tab[]).map((item) => (
           <button className="tab" data-active={tab === item} key={item} onClick={() => setTab(item)}>
             {label(item)}
           </button>
@@ -82,10 +94,167 @@ export default function ConfigurationPage() {
         </form>
       ) : null}
       {tab === "sucursales" ? <BranchesPanel branches={branches} onReload={load} /> : null}
+      {tab === "usuarios" ? <UsersPanel users={users} roles={roles} branches={branches} onReload={load} /> : null}
+      {tab === "roles" ? <RolesPanel roles={roles} permissions={permissions} onReload={load} /> : null}
+      {tab === "permisos" ? <PermissionsMatrixPanel matrix={matrix} /> : null}
       {tab === "impuestos" ? <TaxesPanel taxes={taxes} onReload={load} /> : null}
       {tab === "consecutivos" ? <ConsecutivesPanel branches={branches} consecutives={consecutives} onReload={load} /> : null}
       {tab === "parametros" ? <ParametersPanel branches={branches} parameters={parameters} onReload={load} /> : null}
     </AppLayout>
+  );
+}
+
+function UsersPanel({ users, roles, branches, onReload }: { users: UserSummary[]; roles: RoleSummary[]; branches: Branch[]; onReload: () => Promise<void> }) {
+  async function createUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const branchIds = form.getAll("branchIds").map(String);
+    const roleId = String(form.get("roleId") ?? "");
+    await api<UserSummary>("/users", {
+      method: "POST",
+      body: JSON.stringify({
+        nombre: form.get("nombre"),
+        apellido: form.get("apellido"),
+        email: form.get("email"),
+        telefono: form.get("telefono"),
+        password: form.get("password"),
+        estado: "ACTIVO",
+        branchIds,
+        roles: roleId ? [{ roleId, branchId: String(form.get("roleBranchId") || "") || null }] : []
+      })
+    });
+    event.currentTarget.reset();
+    await onReload();
+  }
+
+  return (
+    <div className="settings-grid">
+      <form className="panel stack" onSubmit={createUser}>
+        <h2>Nuevo usuario</h2>
+        <Field name="nombre" label="Nombre" />
+        <Field name="apellido" label="Apellido" />
+        <Field name="email" label="Email" />
+        <Field name="telefono" label="Telefono" />
+        <Field name="password" label="Password" />
+        <MultiBranch branches={branches} />
+        <RoleSelect roles={roles} branches={branches} />
+        <button className="primary" type="submit">Crear usuario</button>
+      </form>
+      <SimpleTable title="Usuarios" empty="No hay usuarios configurados." rows={users.map((item) => [item.email, `${item.nombre} ${item.apellido}`, item.estado, item.roles.map((role) => role.rol).join(", ")])} />
+    </div>
+  );
+}
+
+function RolesPanel({ roles, permissions, onReload }: { roles: RoleSummary[]; permissions: PermissionSummary[]; onReload: () => Promise<void> }) {
+  async function createRole(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    await api<RoleSummary>("/roles", {
+      method: "POST",
+      body: JSON.stringify({
+        nombre: form.get("nombre"),
+        descripcion: form.get("descripcion"),
+        estado: "ACTIVO",
+        alcance: form.get("alcance"),
+        configurable: true,
+        permissionIds: form.getAll("permissionIds").map(String)
+      })
+    });
+    event.currentTarget.reset();
+    await onReload();
+  }
+
+  return (
+    <div className="settings-grid">
+      <form className="panel stack" onSubmit={createRole}>
+        <h2>Nuevo rol</h2>
+        <Field name="nombre" label="Nombre" />
+        <Field name="descripcion" label="Descripcion" />
+        <Field name="alcance" label="Alcance" defaultValue="EMPRESA" />
+        <div className="permission-list">
+          {permissions.map((permission) => (
+            <label key={permission.id} className="checkbox">
+              <input name="permissionIds" type="checkbox" value={permission.id} /> {permission.code}
+            </label>
+          ))}
+        </div>
+        <button className="primary" type="submit">Crear rol</button>
+      </form>
+      <SimpleTable title="Roles" empty="No hay roles configurados." rows={roles.map((item) => [item.nombre, item.alcance, item.estado, `${item.permisos.length} permisos`])} />
+    </div>
+  );
+}
+
+function PermissionsMatrixPanel({ matrix }: { matrix: PermissionMatrix | null }) {
+  if (!matrix || matrix.roles.length === 0) {
+    return <section className="panel"><h2>Matriz de permisos</h2><p className="muted">No hay roles para mostrar.</p></section>;
+  }
+  return (
+    <section className="panel">
+      <h2>Matriz de permisos</h2>
+      <div className="matrix-wrap">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Rol</th>
+              {matrix.recursos.map((resource) => <th key={resource}>{resource}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {matrix.roles.map((role) => (
+              <tr key={role.roleId}>
+                <td>{role.nombre}</td>
+                {matrix.recursos.map((resource) => (
+                  <td key={resource}>
+                    {matrix.acciones.filter((action) => role.permisos.includes(`${resource}:${action}`)).join(", ") || "-"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function MultiBranch({ branches }: { branches: Branch[] }) {
+  return (
+    <div className="field">
+      <label>Sucursales</label>
+      <div className="permission-list">
+        {branches.map((branch) => (
+          <label key={branch.id} className="checkbox">
+            <input name="branchIds" type="checkbox" value={branch.id} /> {branch.nombre}
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RoleSelect({ roles, branches }: { roles: RoleSummary[]; branches: Branch[] }) {
+  return (
+    <div className="split">
+      <div className="field">
+        <label htmlFor="roleId">Rol</label>
+        <div className="input-row">
+          <select id="roleId" name="roleId" defaultValue="">
+            <option value="">Sin rol</option>
+            {roles.map((role) => <option key={role.id} value={role.id}>{role.nombre}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="field">
+        <label htmlFor="roleBranchId">Alcance sucursal</label>
+        <div className="input-row">
+          <select id="roleBranchId" name="roleBranchId" defaultValue="">
+            <option value="">Todas</option>
+            {branches.map((branch) => <option key={branch.id} value={branch.id}>{branch.nombre}</option>)}
+          </select>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -271,6 +440,9 @@ function label(tab: Tab) {
   return {
     empresa: "Empresa",
     sucursales: "Sucursales",
+    usuarios: "Usuarios",
+    roles: "Roles",
+    permisos: "Permisos",
     impuestos: "Impuestos",
     consecutivos: "Consecutivos",
     parametros: "Parametros"

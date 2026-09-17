@@ -9,6 +9,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -24,6 +26,12 @@ public class Role {
   public String nombre;
   public String descripcion;
   public boolean configurable;
+  public String estado;
+  public String alcance;
+  @Column(name = "fecha_creacion")
+  public Instant fechaCreacion;
+  @Column(name = "fecha_modificacion")
+  public Instant fechaModificacion;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

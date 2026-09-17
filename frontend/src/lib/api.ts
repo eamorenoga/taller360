@@ -40,6 +40,34 @@ export type OperationalParameter = {
   tipo: string;
   descripcion: string | null;
 };
+export type UserSummary = {
+  id: string;
+  empresaId: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  telefono: string | null;
+  estado: string;
+  roles: RoleAssignment[];
+  sucursales: string[];
+};
+export type RoleAssignment = { roleId: string; rol: string; branchId: string | null; sucursal: string };
+export type RoleSummary = {
+  id: string;
+  empresaId: string | null;
+  nombre: string;
+  descripcion: string | null;
+  estado: string;
+  alcance: string;
+  configurable: boolean;
+  permisos: string[];
+};
+export type PermissionSummary = { id: string; modulo: string; accion: string; code: string; descripcion: string | null };
+export type PermissionMatrix = {
+  recursos: string[];
+  acciones: string[];
+  roles: { roleId: string; nombre: string; alcance: string; permisos: string[] }[];
+};
 export type Me = {
   id: string;
   empresaId: string;
