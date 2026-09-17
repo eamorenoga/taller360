@@ -88,6 +88,26 @@ erDiagram
 - `GET /api/v1/roles`
 - `POST /api/v1/roles`
 - `GET /api/v1/permissions`
+- `POST /api/v1/companies`
+- `PUT /api/v1/companies/{id}`
+- `DELETE /api/v1/companies/{id}`
+- `POST /api/v1/branches`
+- `PUT /api/v1/branches/{id}`
+- `DELETE /api/v1/branches/{id}`
+- `GET /api/v1/taxes`
+- `POST /api/v1/taxes`
+- `PUT /api/v1/taxes/{id}`
+- `DELETE /api/v1/taxes/{id}`
+- `GET /api/v1/consecutives`
+- `POST /api/v1/consecutives`
+- `PUT /api/v1/consecutives/{id}`
+- `DELETE /api/v1/consecutives/{id}`
+- `GET /api/v1/operational-parameters`
+- `POST /api/v1/operational-parameters`
+- `PUT /api/v1/operational-parameters/{id}`
+- `DELETE /api/v1/operational-parameters/{id}`
+
+Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
 
 ## 6. Componentes y pantallas
 

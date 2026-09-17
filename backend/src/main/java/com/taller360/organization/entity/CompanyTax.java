@@ -3,24 +3,26 @@ package com.taller360.organization.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "empresas")
-public class Company {
+@Table(name = "empresa_impuestos")
+public class CompanyTax {
   @Id
   public UUID id;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  public Company empresa;
   public String nombre;
-  public String nit;
-  public String estado;
-  public String moneda;
-  @Column(name = "zona_horaria")
-  public String zonaHoraria;
-  public String email;
-  public String telefono;
-  public String direccion;
+  public String codigo;
+  public BigDecimal porcentaje;
+  public boolean incluido;
+  public boolean activo;
   @Column(name = "fecha_creacion")
   public Instant fechaCreacion;
   @Column(name = "fecha_modificacion")

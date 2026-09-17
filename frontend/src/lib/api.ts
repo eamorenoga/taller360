@@ -1,4 +1,45 @@
 export type BranchOption = { id: string; nombre: string };
+export type Company = {
+  id: string;
+  nombre: string;
+  nit: string | null;
+  estado: string;
+  moneda: string;
+  zonaHoraria: string;
+  email: string | null;
+  telefono: string | null;
+  direccion: string | null;
+};
+export type Branch = BranchOption & {
+  empresaId: string;
+  codigo: string | null;
+  direccion: string | null;
+  telefono: string | null;
+  email: string | null;
+  moneda: string | null;
+  zonaHoraria: string | null;
+  permiteOperacion: boolean;
+  estado: string;
+};
+export type Tax = { id: string; nombre: string; codigo: string; porcentaje: number; incluido: boolean; activo: boolean };
+export type Consecutive = {
+  id: string;
+  sucursalId: string | null;
+  documento: string;
+  prefijo: string;
+  siguienteNumero: number;
+  longitud: number;
+  activo: boolean;
+  vistaPrevia: string;
+};
+export type OperationalParameter = {
+  id: string;
+  sucursalId: string | null;
+  clave: string;
+  valor: string;
+  tipo: string;
+  descripcion: string | null;
+};
 export type Me = {
   id: string;
   empresaId: string;
@@ -45,6 +86,16 @@ export function saveSession(response: LoginResponse) {
   localStorage.setItem("accessToken", response.accessToken);
   localStorage.setItem("refreshToken", response.refreshToken);
   localStorage.setItem("me", JSON.stringify(response.user));
+}
+
+export async function switchBranch(branchId: string) {
+  const refreshToken = localStorage.getItem("refreshToken");
+  const response = await api<LoginResponse>("/auth/refresh", {
+    method: "POST",
+    body: JSON.stringify({ refreshToken, branchId })
+  });
+  saveSession(response);
+  return response.user;
 }
 
 export function currentUser(): Me | null {

@@ -20,6 +20,11 @@ public class ApiExceptionHandler {
     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", ex.getMessage()));
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  ResponseEntity<Map<String, String>> invalid(IllegalArgumentException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", ex.getMessage()));
+  }
+
   @ExceptionHandler(RuntimeException.class)
   ResponseEntity<Map<String, String>> runtime(RuntimeException ex) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Error del servidor"));

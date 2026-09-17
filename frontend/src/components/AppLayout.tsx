@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { allowedMenu } from "@/lib/permissions";
 import type { Me } from "@/lib/api";
-import { logout } from "@/lib/api";
+import { logout, switchBranch } from "@/lib/api";
 
 export function AppLayout({ user, children }: { user: Me; children: React.ReactNode }) {
   const router = useRouter();
@@ -15,6 +15,12 @@ export function AppLayout({ user, children }: { user: Me; children: React.ReactN
   function closeSession() {
     logout();
     router.push("/login");
+  }
+
+  async function changeBranch(branchId: string) {
+    await switchBranch(branchId);
+    router.refresh();
+    window.location.reload();
   }
 
   return (
@@ -36,7 +42,18 @@ export function AppLayout({ user, children }: { user: Me; children: React.ReactN
         <header className="topbar">
           <div>
             <strong>{user.empresa}</strong>
-            <div>{branch?.nombre ?? "Sin sucursal seleccionada"}</div>
+            <div>
+              {user.sucursales.length > 1 ? (
+                <select className="branch-select" value={user.sucursalId ?? ""} onChange={(event) => changeBranch(event.target.value)} aria-label="Sucursal actual">
+                  <option value="" disabled>Seleccionar sucursal</option>
+                  {user.sucursales.map((item) => (
+                    <option key={item.id} value={item.id}>{item.nombre}</option>
+                  ))}
+                </select>
+              ) : (
+                branch?.nombre ?? "Sin sucursal seleccionada"
+              )}
+            </div>
           </div>
           <div className="topbar-actions">
             <Bell size={20} aria-label="Notificaciones" />

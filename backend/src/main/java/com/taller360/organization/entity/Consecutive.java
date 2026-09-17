@@ -10,24 +10,22 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sucursales")
-public class Branch {
+@Table(name = "consecutivos")
+public class Consecutive {
   @Id
   public UUID id;
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   public Company empresa;
-  public String nombre;
-  public String codigo;
-  public String direccion;
-  public String telefono;
-  public String email;
-  public String moneda;
-  @Column(name = "zona_horaria")
-  public String zonaHoraria;
-  @Column(name = "permite_operacion")
-  public boolean permiteOperacion;
-  public String estado;
+  @ManyToOne
+  @JoinColumn(name = "sucursal_id")
+  public Branch sucursal;
+  public String documento;
+  public String prefijo;
+  @Column(name = "siguiente_numero")
+  public long siguienteNumero;
+  public int longitud;
+  public boolean activo;
   @Column(name = "fecha_creacion")
   public Instant fechaCreacion;
   @Column(name = "fecha_modificacion")

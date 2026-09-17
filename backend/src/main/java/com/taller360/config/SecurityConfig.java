@@ -1,6 +1,7 @@
 package com.taller360.config;
 
 import com.taller360.common.security.JwtAuthenticationFilter;
+import com.taller360.common.tenant.TenantContextFilter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+  SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter, TenantContextFilter tenantContextFilter) throws Exception {
     return http
         .csrf(csrf -> csrf.disable())
         .cors(cors -> {})
@@ -35,6 +36,7 @@ public class SecurityConfig {
             .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(tenantContextFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 
