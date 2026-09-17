@@ -126,6 +126,61 @@ export type Vehicle360 = {
   garantias: { id: string; tipo: string; descripcion: string | null; proveedor: string | null; iniciaEn: string | null; venceEn: string | null; kilometrajeLimite: number | null; estado: string; fechaCreacion: string }[];
   timeline: { id: string; modulo: string; titulo: string; descripcion: string | null; referenciaId: string | null; estado: string | null; fechaHora: string }[];
 };
+export type Appointment = {
+  id: string;
+  empresaId: string;
+  sucursalId: string;
+  clienteId: string;
+  cliente: string;
+  vehiculoId: string;
+  placa: string;
+  asesorId: string | null;
+  tecnicoId: string | null;
+  bahiaId: string | null;
+  servicio: string;
+  fechaInicio: string;
+  fechaFin: string;
+  duracionMinutos: number;
+  estado: string;
+  notas: string | null;
+  sobrecapacidad: boolean;
+  recepcionId: string | null;
+};
+export type AppointmentCalendar = { start: string; end: string; view: string; citas: Appointment[] };
+export type AppointmentCapacity = {
+  sucursalId: string;
+  start: string;
+  end: string;
+  citasProgramadas: number;
+  capacidadMaxima: number;
+  sobrecapacidad: boolean;
+};
+export type AppointmentReminder = {
+  id: string;
+  canal: string;
+  programadoPara: string;
+  enviadoEn: string | null;
+  estado: string;
+  mensaje: string | null;
+};
+export type AppointmentTechnician = {
+  id: string;
+  sucursalId: string | null;
+  usuarioId: string | null;
+  nombre: string;
+  especialidad: string | null;
+  activo: boolean;
+};
+export type AppointmentBay = { id: string; sucursalId: string; nombre: string; tipo: string | null; activa: boolean };
+export type ScheduleCapacityRule = {
+  id: string;
+  sucursalId: string;
+  diaSemana: number;
+  horaInicio: string;
+  horaFin: string;
+  capacidadMaxima: number;
+  activo: boolean;
+};
 export type Me = {
   id: string;
   empresaId: string;

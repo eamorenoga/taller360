@@ -127,11 +127,24 @@ erDiagram
 - `POST /api/v1/vehicles/{id}/documents`
 - `POST /api/v1/vehicles/{id}/photos`
 - `POST /api/v1/vehicles/{id}/warranties`
+- `GET /api/v1/appointments`
+- `GET /api/v1/appointments/capacity`
+- `POST /api/v1/appointments`
+- `PUT /api/v1/appointments/{id}`
+- `PATCH /api/v1/appointments/{id}/state`
+- `DELETE /api/v1/appointments/{id}`
+- `GET /api/v1/appointments/{id}/reminders`
+- `POST /api/v1/appointments/{id}/reminders`
+- `POST /api/v1/appointments/{id}/convert-to-reception`
+- `GET /api/v1/appointments/technicians`
+- `GET /api/v1/appointments/bays`
+- `GET /api/v1/appointments/capacity-rules`
 
 Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
 Documentacion tecnica del modulo M03: [docs/M03_USUARIOS_ROLES_PERMISOS.md](docs/M03_USUARIOS_ROLES_PERMISOS.md).
 Documentacion tecnica del modulo M04: [docs/M04_CLIENTES.md](docs/M04_CLIENTES.md).
 Documentacion tecnica del modulo M05: [docs/M05_VEHICULOS.md](docs/M05_VEHICULOS.md).
+Documentacion tecnica del modulo M06: [docs/M06_AGENDA_CITAS.md](docs/M06_AGENDA_CITAS.md).
 
 ## 6. Componentes y pantallas
 
