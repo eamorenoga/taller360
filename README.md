@@ -111,9 +111,18 @@ erDiagram
 - `POST /api/v1/operational-parameters`
 - `PUT /api/v1/operational-parameters/{id}`
 - `DELETE /api/v1/operational-parameters/{id}`
+- `GET /api/v1/clients`
+- `GET /api/v1/clients/{id}`
+- `POST /api/v1/clients`
+- `PUT /api/v1/clients/{id}`
+- `DELETE /api/v1/clients/{id}`
+- `POST /api/v1/clients/{id}/contacts`
+- `POST /api/v1/clients/{id}/documents`
+- `POST /api/v1/clients/{id}/communications`
 
 Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
 Documentacion tecnica del modulo M03: [docs/M03_USUARIOS_ROLES_PERMISOS.md](docs/M03_USUARIOS_ROLES_PERMISOS.md).
+Documentacion tecnica del modulo M04: [docs/M04_CLIENTES.md](docs/M04_CLIENTES.md).
 
 ## 6. Componentes y pantallas
 

@@ -68,6 +68,37 @@ export type PermissionMatrix = {
   acciones: string[];
   roles: { roleId: string; nombre: string; alcance: string; permisos: string[] }[];
 };
+export type Client = {
+  id: string;
+  empresaId: string;
+  sucursalId: string | null;
+  tipoPersona: string;
+  tipoIdentificacion: string | null;
+  identificacion: string | null;
+  nombre: string;
+  razonSocial: string | null;
+  telefonoPrincipal: string | null;
+  telefonoSecundario: string | null;
+  whatsapp: string | null;
+  email: string | null;
+  direccion: string | null;
+  notas: string | null;
+  preferencias: string | null;
+  estado: string;
+};
+export type Client360 = {
+  cliente: Client;
+  contactos: { id: string; nombre: string; relacion: string | null; telefono: string | null; whatsapp: string | null; email: string | null; principal: boolean; notas: string | null; estado: string }[];
+  documentos: { id: string; tipo: string; nombreArchivo: string; url: string; notas: string | null; estado: string; fechaCreacion: string }[];
+  comunicaciones: { id: string; canal: string; direccion: string | null; asunto: string | null; contenido: string | null; estado: string; fechaHora: string }[];
+  vehiculos: RelatedItem[];
+  citas: RelatedItem[];
+  ordenesTrabajo: RelatedItem[];
+  facturas: RelatedItem[];
+  pagos: RelatedItem[];
+  cartera: { estado: string; saldoPendiente: number; moneda: string; documentos: RelatedItem[] };
+};
+export type RelatedItem = { id: string; titulo: string; estado: string; referencia: string; fecha: string };
 export type Me = {
   id: string;
   empresaId: string;

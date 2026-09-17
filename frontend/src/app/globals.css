@@ -309,6 +309,23 @@ select {
   overflow: auto;
 }
 
+.client-row {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.client-row span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 @media (max-width: 800px) {
   .app-shell {
     grid-template-columns: 1fr;
