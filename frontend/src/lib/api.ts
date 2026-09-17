@@ -229,6 +229,53 @@ export type ReceptionDetail = {
   firmas: { id: string; firmante: string; firmaUrl: string; hashContenido: string; version: number; fechaCreacion: string }[];
   pdf: { id: string; version: number; url: string; contenidoBase64: string; hashContenido: string; fechaCreacion: string } | null;
 };
+export type SymptomItem = { descripcion: string; severidad: string; condicion: string | null };
+export type InspectionItem = { sistema: string; resultado: string; observacion: string | null };
+export type DtcItem = { codigo: string; descripcion: string; modulo: string | null; estado: string | null };
+export type TestItem = { nombre: string; resultado: string; unidad: string | null; observacion: string | null };
+export type FindingItem = { descripcion: string; evidencia: string | null; impacto: string | null };
+export type AiSuggestion = {
+  causasProbables: string[];
+  pruebasSugeridas: string[];
+  recomendaciones: string[];
+  repuestosPosibles: string[];
+  prioridadSugerida: string;
+  requiereConfirmacionTecnica: boolean;
+  aviso: string;
+};
+export type Diagnostic = {
+  id: string;
+  empresaId: string;
+  sucursalId: string;
+  ordenTrabajoId: string;
+  recepcionId: string | null;
+  clienteId: string;
+  cliente: string;
+  vehiculoId: string;
+  placa: string;
+  tecnicoId: string | null;
+  sintomas: SymptomItem[];
+  inspecciones: InspectionItem[];
+  dtc: DtcItem[];
+  pruebas: TestItem[];
+  hallazgos: FindingItem[];
+  causaProbable: string | null;
+  solucionRecomendada: string | null;
+  prioridad: string;
+  estado: string;
+  tiempoEstimadoMinutos: number;
+  iaSugerencia: AiSuggestion | null;
+  iaConfirmadaPor: string | null;
+  iaConfirmadaEn: string | null;
+  fechaCreacion: string;
+  fechaModificacion: string;
+};
+export type DiagnosticDetail = {
+  diagnostico: Diagnostic;
+  evidencias: { id: string; tipo: string; url: string; nombreArchivo: string; mimeType: string | null; tamanoBytes: number; metadatosJson: string; fechaCreacion: string }[];
+  tareas: { id: string; descripcion: string; prioridad: string; estado: string; tiempoEstimadoMinutos: number; fechaCreacion: string }[];
+  repuestos: { id: string; codigo: string | null; nombre: string; cantidad: number; requerido: boolean; notas: string | null; fechaCreacion: string }[];
+};
 export type Me = {
   id: string;
   empresaId: string;

@@ -147,6 +147,16 @@ erDiagram
 - `POST /api/v1/receptions/{id}/photos`
 - `POST /api/v1/receptions/{id}/sign`
 - `POST /api/v1/receptions/{id}/work-order`
+- `GET /api/v1/diagnostics`
+- `GET /api/v1/diagnostics/{id}`
+- `POST /api/v1/diagnostics`
+- `PUT /api/v1/diagnostics/{id}`
+- `DELETE /api/v1/diagnostics/{id}`
+- `POST /api/v1/diagnostics/{id}/evidences`
+- `POST /api/v1/diagnostics/{id}/tasks`
+- `POST /api/v1/diagnostics/{id}/parts`
+- `POST /api/v1/diagnostics/{id}/ai-assist`
+- `POST /api/v1/diagnostics/{id}/ai-confirm`
 
 Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
 Documentacion tecnica del modulo M03: [docs/M03_USUARIOS_ROLES_PERMISOS.md](docs/M03_USUARIOS_ROLES_PERMISOS.md).
@@ -154,6 +164,7 @@ Documentacion tecnica del modulo M04: [docs/M04_CLIENTES.md](docs/M04_CLIENTES.m
 Documentacion tecnica del modulo M05: [docs/M05_VEHICULOS.md](docs/M05_VEHICULOS.md).
 Documentacion tecnica del modulo M06: [docs/M06_AGENDA_CITAS.md](docs/M06_AGENDA_CITAS.md).
 Documentacion tecnica del modulo M07: [docs/M07_RECEPCION_DIGITAL.md](docs/M07_RECEPCION_DIGITAL.md).
+Documentacion tecnica del modulo M08: [docs/M08_DIAGNOSTICO_TECNICO.md](docs/M08_DIAGNOSTICO_TECNICO.md).
 
 ## 6. Componentes y pantallas
 

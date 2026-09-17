@@ -4,6 +4,7 @@ const menuItems = [
   ["Vehiculos", "/vehiculos", "VEHICULOS:VER"],
   ["Citas", "/citas", "CITAS:VER"],
   ["Recepcion", "/recepcion", "RECEPCION:VER"],
+  ["Diagnosticos", "/diagnosticos", "DIAGNOSTICOS:VER"],
   ["Ordenes de trabajo", "/ordenes", "ORDENES:VER"],
   ["Kanban", "/kanban", "KANBAN:VER"],
   ["Tecnicos", "/tecnicos", "TECNICOS:VER"],
