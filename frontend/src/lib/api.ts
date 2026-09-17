@@ -60,18 +60,33 @@ export type LoginResponse = {
   user: Me;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/api/v1";
+const DEFAULT_RENDER_API_URL = "https://taller360.onrender.com/api/v1";
+
+function apiUrl() {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  if (typeof window !== "undefined" && window.location.hostname.endsWith(".onrender.com")) {
+    return DEFAULT_RENDER_API_URL;
+  }
+  return "http://localhost:8080/api/v1";
+}
 
 export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers
-    }
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${apiUrl()}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers
+      }
+    });
+  } catch {
+    throw new Error("No se pudo conectar con la API. Verifica NEXT_PUBLIC_API_URL y CORS del backend.");
+  }
   if (!response.ok) {
     const body = await response.json().catch(() => ({ message: "Error del servidor" }));
     throw new Error(body.message ?? "Error del servidor");
