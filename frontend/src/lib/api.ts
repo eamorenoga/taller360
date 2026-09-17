@@ -181,6 +181,54 @@ export type ScheduleCapacityRule = {
   capacidadMaxima: number;
   activo: boolean;
 };
+export type AccessoryItem = { nombre: string; presente: boolean; observacion: string | null };
+export type ChecklistItem = { codigo: string; etiqueta: string; ok: boolean; observacion: string | null };
+export type DamageItem = { zona: string; x: number; y: number; severidad: string; descripcion: string };
+export type Reception = {
+  id: string;
+  empresaId: string;
+  sucursalId: string;
+  citaId: string | null;
+  clienteId: string;
+  cliente: string;
+  vehiculoId: string;
+  placa: string;
+  asesorId: string | null;
+  kilometraje: number;
+  combustiblePorcentaje: number;
+  motivo: string;
+  accesorios: AccessoryItem[];
+  checklist: ChecklistItem[];
+  danos: DamageItem[];
+  observaciones: string | null;
+  estado: string;
+  versionFirmada: number | null;
+  firmadoEn: string | null;
+  firmadoPor: string | null;
+  firmaUrl: string | null;
+  pdfUrl: string | null;
+  ordenTrabajoId: string | null;
+  fechaCreacion: string;
+  fechaModificacion: string;
+};
+export type ReceptionPhoto = {
+  id: string;
+  url: string;
+  nombreArchivo: string;
+  tipo: string;
+  tamanoOriginalBytes: number;
+  tamanoComprimidoBytes: number;
+  ancho: number | null;
+  alto: number | null;
+  metadatosJson: string;
+  fechaCreacion: string;
+};
+export type ReceptionDetail = {
+  recepcion: Reception;
+  fotos: ReceptionPhoto[];
+  firmas: { id: string; firmante: string; firmaUrl: string; hashContenido: string; version: number; fechaCreacion: string }[];
+  pdf: { id: string; version: number; url: string; contenidoBase64: string; hashContenido: string; fechaCreacion: string } | null;
+};
 export type Me = {
   id: string;
   empresaId: string;

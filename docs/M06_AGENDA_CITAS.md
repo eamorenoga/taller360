@@ -6,7 +6,7 @@
 - M03 Usuarios, roles y permisos: permisos `CITAS:*`, asesor autenticado y auditoria.
 - M04 Clientes: cada cita referencia un cliente activo del tenant.
 - M05 Vehiculos: cada cita referencia un vehiculo del mismo cliente y tenant.
-- M07 Recepcion: no existe aun. Se deja `ReceptionPort` como interfaz y `PendingReceptionPort` como stub reemplazable.
+- M07 Recepcion: `ReceptionPort` crea o reutiliza recepciones digitales desde una cita.
 
 ## Historias de usuario y criterios de aceptacion
 
@@ -22,7 +22,7 @@
   - Cada cambio genera auditoria.
 - Como operacion, quiero convertir una cita en recepcion.
   - La conversion usa un puerto de dominio hacia M07.
-  - Mientras M07 no exista, el stub devuelve un identificador reservado.
+  - Si ya existe recepcion para la cita, se reutiliza.
 
 ## Modelo entidad-relacion
 
