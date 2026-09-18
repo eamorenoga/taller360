@@ -5,6 +5,7 @@ const menuItems = [
   ["Citas", "/citas", "CITAS:VER"],
   ["Recepcion", "/recepcion", "RECEPCION:VER"],
   ["Diagnosticos", "/diagnosticos", "DIAGNOSTICOS:VER"],
+  ["Cotizaciones", "/cotizaciones", "COTIZACIONES:VER"],
   ["Ordenes de trabajo", "/ordenes", "ORDENES:VER"],
   ["Kanban", "/kanban", "KANBAN:VER"],
   ["Tecnicos", "/tecnicos", "TECNICOS:VER"],

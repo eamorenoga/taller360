@@ -11,6 +11,7 @@ const titles: Record<string, string> = {
   citas: "Citas",
   recepcion: "Recepcion",
   diagnosticos: "Diagnosticos",
+  cotizaciones: "Cotizaciones",
   ordenes: "Ordenes de trabajo",
   kanban: "Kanban",
   tecnicos: "Tecnicos",

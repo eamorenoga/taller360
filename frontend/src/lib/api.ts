@@ -276,6 +276,53 @@ export type DiagnosticDetail = {
   tareas: { id: string; descripcion: string; prioridad: string; estado: string; tiempoEstimadoMinutos: number; fechaCreacion: string }[];
   repuestos: { id: string; codigo: string | null; nombre: string; cantidad: number; requerido: boolean; notas: string | null; fechaCreacion: string }[];
 };
+export type Quotation = {
+  id: string;
+  empresaId: string;
+  sucursalId: string;
+  ordenTrabajoId: string;
+  clienteId: string;
+  cliente: string;
+  vehiculoId: string;
+  placa: string;
+  versionActual: number;
+  estado: string;
+  venceEn: string | null;
+  moneda: string;
+  subtotal: number;
+  descuentoTotal: number;
+  impuestoTotal: number;
+  total: number;
+  publicToken: string;
+  pdfUrl: string | null;
+  trabajoGeneradoId: string | null;
+  fechaCreacion: string;
+  fechaModificacion: string;
+};
+export type QuotationItem = {
+  id: string;
+  version: number;
+  tipo: string;
+  codigo: string | null;
+  descripcion: string;
+  cantidad: number;
+  valorUnitario: number;
+  impuestoPorcentaje: number;
+  descuentoPorcentaje: number;
+  subtotal: number;
+  descuento: number;
+  impuesto: number;
+  total: number;
+  estadoAprobacion: string;
+  fechaCreacion: string;
+};
+export type QuotationDetail = {
+  cotizacion: Quotation;
+  items: QuotationItem[];
+  versiones: { id: string; version: number; snapshotJson: string; subtotal: number; descuentoTotal: number; impuestoTotal: number; total: number; fechaCreacion: string }[];
+  aprobaciones: { id: string; itemId: string | null; accion: string; aprobadorNombre: string; aprobadorEmail: string | null; evidenciaJson: string; fechaCreacion: string }[];
+  pdf: { id: string; version: number; url: string; contenidoBase64: string; hashContenido: string; fechaCreacion: string } | null;
+};
 export type Me = {
   id: string;
   empresaId: string;

@@ -157,6 +157,16 @@ erDiagram
 - `POST /api/v1/diagnostics/{id}/parts`
 - `POST /api/v1/diagnostics/{id}/ai-assist`
 - `POST /api/v1/diagnostics/{id}/ai-confirm`
+- `GET /api/v1/quotations`
+- `GET /api/v1/quotations/{id}`
+- `GET /api/v1/quotations/public/{token}`
+- `POST /api/v1/quotations`
+- `PUT /api/v1/quotations/{id}`
+- `POST /api/v1/quotations/{id}/send`
+- `POST /api/v1/quotations/{id}/approve`
+- `POST /api/v1/quotations/public/{token}/approve`
+- `POST /api/v1/quotations/{id}/generate-work`
+- `DELETE /api/v1/quotations/{id}`
 
 Documentacion tecnica del modulo M02: [docs/M02_EMPRESAS_SUCURSALES.md](docs/M02_EMPRESAS_SUCURSALES.md).
 Documentacion tecnica del modulo M03: [docs/M03_USUARIOS_ROLES_PERMISOS.md](docs/M03_USUARIOS_ROLES_PERMISOS.md).
@@ -165,6 +175,7 @@ Documentacion tecnica del modulo M05: [docs/M05_VEHICULOS.md](docs/M05_VEHICULOS
 Documentacion tecnica del modulo M06: [docs/M06_AGENDA_CITAS.md](docs/M06_AGENDA_CITAS.md).
 Documentacion tecnica del modulo M07: [docs/M07_RECEPCION_DIGITAL.md](docs/M07_RECEPCION_DIGITAL.md).
 Documentacion tecnica del modulo M08: [docs/M08_DIAGNOSTICO_TECNICO.md](docs/M08_DIAGNOSTICO_TECNICO.md).
+Documentacion tecnica del modulo M09: [docs/M09_COTIZACIONES_APROBACIONES.md](docs/M09_COTIZACIONES_APROBACIONES.md).
 
 ## 6. Componentes y pantallas
 
